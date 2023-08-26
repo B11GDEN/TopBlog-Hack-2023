@@ -17,14 +17,14 @@ SEARCH_LIST = [
     {'key': 'подписки', 'search': 'left', 'values': ['number']},
     {'key': 'отписки', 'search': 'left', 'values': ['number']},
 
-    {'key': 'сегодня', 'search': 'left', 'values': ['number']},
-    {'key': 'вчера', 'search': 'left', 'values': ['number']},
-    {'key': 'за неделю', 'search': 'left', 'values': ['number']},
-    {'key': 'за месяц', 'search': 'left', 'values': ['number']},
-
-    {'key': 'за 12 часов', 'search': 'left', 'values': ['number']},
-    {'key': 'за 24 часа', 'search': 'left', 'values': ['number']},
-    {'key': 'за 48 часов', 'search': 'left', 'values': ['number']},
+    # {'key': 'сегодня', 'search': 'left', 'values': ['number']},
+    # {'key': 'вчера', 'search': 'left', 'values': ['number']},
+    # {'key': 'за неделю', 'search': 'left', 'values': ['number']},
+    # {'key': 'за месяц', 'search': 'left', 'values': ['number']},
+    #
+    # {'key': 'за 12 часов', 'search': 'left', 'values': ['number']},
+    # {'key': 'за 24 часа', 'search': 'left', 'values': ['number']},
+    # {'key': 'за 48 часов', 'search': 'left', 'values': ['number']},
 
     {'key': 'уп. каналов', 'search': 'left', 'values': ['number']},
     {'key': 'упоминаний', 'search': 'left', 'values': ['number']},

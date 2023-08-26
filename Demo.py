@@ -47,18 +47,18 @@ def show_result(original, detection, match, matches, user_instance, platform):
     st.image(match, channels="BGR")
 
     col1, col2, col3 = st.columns(3)
-    user_name = user_instance.value if user_instance is not None else 'Unknown'
+    user_name = user_instance.value1 if user_instance is not None else 'Unknown'
     col1.metric("User", f"{user_name}")
     col2.metric("Platform", f"{platform}")
     col1, col2, col3 = st.columns(3)
     for idx, mm in enumerate(matches):
         num = idx % 3
         if num == 0:
-            col1.metric(f"{mm.value}", f"{mm.match_instance.value}")
+            col1.metric(f"{mm.value1}", f"{mm.match_instance.value1}")
         elif num == 1:
-            col2.metric(f"{mm.value}", f"{mm.match_instance.value}")
+            col2.metric(f"{mm.value1}", f"{mm.match_instance.value1}")
         elif num == 2:
-            col3.metric(f"{mm.value}", f"{mm.match_instance.value}")
+            col3.metric(f"{mm.value1}", f"{mm.match_instance.value1}")
 
 
 if __name__ == "__main__":

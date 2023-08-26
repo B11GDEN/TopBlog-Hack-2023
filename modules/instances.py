@@ -8,6 +8,7 @@ class Instance:
         self.prob = prob
         self.bbox = [x1, y1, x2, y2]
         self.value, self.label = self.get_cls(text)
+        self.value1 = text
         if self.label == 'text':
             self.value = self.filter_text_value(self.value)
         self.match_instance = None
@@ -56,6 +57,14 @@ class Instance:
             try:
                 num = float(value[:-3].replace(',', '.'))
                 return num * 1000, 'number'
+            except Exception:
+                pass
+
+        # проверка на число с млн
+        if value.endswith('млн'):
+            try:
+                num = float(value[:-3].replace(',', '.'))
+                return num * 1000000, 'number'
             except Exception:
                 pass
 

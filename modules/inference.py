@@ -41,4 +41,4 @@ def inference(img):
         color = 'orange'
         bb.add(img, x1, y1, x2, y2, str(user_instance.value), color)
 
-    return img_det, img, matched_instances, user_instance
+    return img_det, img, matched_instances, user_instance, platform

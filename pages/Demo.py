@@ -7,7 +7,7 @@ import os
 import numpy as np
 import pandas as pd
 
-from types import NoneType
+# from types import NoneType
 
 from modules.inference import inference
 
@@ -24,7 +24,8 @@ def demo():
         submitted = st.form_submit_button("Submit")
 
     if submitted:
-        if type(image) is NoneType:
+        # if type(image) is NoneType:
+        if False:
             st.error('You have to choose an image!', icon="🚨")
 
         else:
@@ -34,14 +35,14 @@ def demo():
             original = opencv_image.copy()
 
             with st.spinner('Image processing'):
-                img_det, img_match, matched_instances, user_instance = inference(opencv_image)
+                img_det, img_match, matched_instances, user_instance, platform = inference(opencv_image)
 
             # res_show = cv2.resize(res, (0,0), fx=0.5, fy=0.5)
 
-            show_result(original, img_det, img_match, matched_instances, user_instance)
+            show_result(original, img_det, img_match, matched_instances, user_instance, platform)
 
 
-def show_result(original, detection, match, matches, user_instance):
+def show_result(original, detection, match, matches, user_instance, platform):
 
     st.header("Results")
 
@@ -57,7 +58,10 @@ def show_result(original, detection, match, matches, user_instance):
             st.text("Original image and the detected numbers and text.")
             st.text("Matched instances:")
             # st.text(f"User: {user_instance.value}")
-            st.metric("User", f"{user_instance.value}")
+            col1, col2 = st.columns(2)
+            user_name = user_instance.value if user_instance is not None else 'Unknown'
+            col1.metric("User", f"{user_name}")
+            col2.metric("Platform", f"{platform}")
             col1, col2, col3 = st.columns(3)
             for idx, mm in enumerate(matches):
                 num = idx % 3

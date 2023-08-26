@@ -7,7 +7,7 @@ import pandas as pd
 import os
 import shutil
 
-from types import NoneType
+# from types import NoneType
 
 from modules.inference import inference
 from modules.utils import MAIN_STAT
@@ -42,7 +42,8 @@ def exel_form():
         # if type(table) is NoneType:
         #     st.error('You have to choose an table!', icon="🚨")
 
-        if type(archive) is NoneType:
+        # if type(archive) is NoneType:
+        if False:
             st.error('You have to choose an archive!', icon="🚨")
 
         if len(options) == 0:
@@ -94,7 +95,7 @@ def exel_form():
                 filename = file.name
                 img = cv2.imread(str(file))
 
-                res_img, _, matched_instances, user_instance = inference(img)
+                res_img, _, matched_instances, user_instance, _ = inference(img)
 
                 res_dict = {"name": filename, "img": res_img}
                 if user_instance:
@@ -126,10 +127,11 @@ def download_result(results, options):
         row = []
         for column in options:
             try:
-                row.append(result[column])
+                row.append(result[column.lower()])
             except KeyError:
                 row.append("none")
-        df.loc[-1] = row
+        # df.loc[-1] = row
+        df.loc[len(df.index)] = row
 
     st.dataframe(df)
 

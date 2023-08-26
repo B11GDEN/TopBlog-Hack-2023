@@ -7,7 +7,7 @@ import os
 import numpy as np
 import pandas as pd
 
-# from types import NoneType
+from types import NoneType
 
 from modules.inference import inference
 
@@ -19,14 +19,14 @@ def demo():
     main_form = st.form("main_form", clear_on_submit=True)
 
     with main_form:
-        image = st.file_uploader("Choose a image", accept_multiple_files=False, type=['jpg', 'png'])
+        image = st.file_uploader("Выберите изображение", accept_multiple_files=False, type=['jpg', 'png'])
 
-        submitted = st.form_submit_button("Submit")
+        submitted = st.form_submit_button("Запустить")
 
     if submitted:
-        # if type(image) is NoneType:
-        if False:
-            st.error('You have to choose an image!', icon="🚨")
+        if type(image) is NoneType:
+        # if False:
+            st.error('Вам необходимо выбрать изображение!', icon="🚨")
 
         else:
             file_bytes = np.asarray(bytearray(image.read()), dtype=np.uint8)
@@ -34,7 +34,7 @@ def demo():
             opencv_image = cv2.imdecode(file_bytes, 1)
             original = opencv_image.copy()
 
-            with st.spinner('Image processing'):
+            with st.spinner('Обработка изображения'):
                 img_det, img_match, matched_instances, user_instance, platform = inference(opencv_image)
 
             # res_show = cv2.resize(res, (0,0), fx=0.5, fy=0.5)
@@ -44,12 +44,9 @@ def demo():
 
 def show_result(original, detection, match, matches, user_instance, platform):
 
-    st.header("Results")
+    st.header("Результаты")
 
     st.image(match, channels="BGR")
-
-    st.text("Original image and the detected numbers and text.")
-    st.text("Matched instances:")
 
     col1, col2, col3 = st.columns(3)
     user_name = user_instance.value if user_instance is not None else 'Unknown'

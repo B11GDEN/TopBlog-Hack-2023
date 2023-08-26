@@ -8,7 +8,7 @@ import pandas as pd
 import os
 import shutil
 
-# from types import NoneType
+from types import NoneType
 
 from modules.inference import inference
 from modules.utils import MAIN_STAT
@@ -34,21 +34,21 @@ def exel_form():
     with main_form:
         # table = st.file_uploader("Choose a table", accept_multiple_files=False, type=['xlsx'])
 
-        archive = st.file_uploader("Choose a archive with images", accept_multiple_files=False, type=['zip'])
-        options = st.multiselect('Select the parameters to be uploaded', MAIN_STAT)
+        archive = st.file_uploader("Выберите архив с изображениями", accept_multiple_files=False, type=['zip'])
+        options = st.multiselect('Выберите параметры, которые будут выгружены в таблицу', MAIN_STAT)
 
-        submitted = st.form_submit_button("Submit")
+        submitted = st.form_submit_button("Запустить")
 
     if submitted:
         # if type(table) is NoneType:
         #     st.error('You have to choose an table!', icon="🚨")
 
-        # if type(archive) is NoneType:
-        if False:
-            st.error('You have to choose an archive!', icon="🚨")
+        if type(archive) is NoneType:
+        # if False:
+            st.error('Вам необходимо выбрать архив!', icon="🚨")
 
         if len(options) == 0:
-            st.error('You have to choose the parameters!', icon="🚨")
+            st.error('Вам необходимо выбрать параметры!', icon="🚨")
 
         else:
             # bytes_data = table.read()
@@ -62,7 +62,7 @@ def exel_form():
             # df = xl.parse('Sheet1')
             # st.dataframe(df)
 
-            with st.spinner('Save and unzip archive'):
+            with st.spinner('Сохранение и разархивация данных'):
 
                 bytes_data = archive.read()
 
@@ -91,7 +91,7 @@ def exel_form():
             results = []
             i = 0
             n = 0
-            my_bar = st.progress(0, text=f"Image processing: {n}/{file_count}")
+            my_bar = st.progress(0, text=f"Обработка изображений: {n}/{file_count}")
             for file in new_unzip.glob('*'):
                 filename = file.name
                 img = cv2.imread(str(file))
@@ -115,8 +115,8 @@ def exel_form():
 
                 i += round(cost)
                 n += 1
-                my_bar.progress(i, text=f"Image processing: {n}/{file_count}")
-            my_bar.progress(100, text=f"Image processing: Done!")
+                my_bar.progress(i, text=f"Обработка изображений: {n}/{file_count}")
+            my_bar.progress(100, text=f"Обработка изображений: Завершена!")
 
             clear_path(str(unzip))
 

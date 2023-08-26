@@ -10,5 +10,5 @@ def choose_template(instances: list[Instance]):
         if instance.label == 'text' and 'tgstat' in instance.value:
             return 'tgstat', TGSTATS_SEARCH_LIST, tgstats_search_user
 
-    return None, None
+    return None, None, None
 

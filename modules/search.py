@@ -121,7 +121,38 @@ def closest_right_instance(instances: list[Instance], target_instance: Instance,
     return best_idx
 
 
+def closest_instance(instances: list[Instance], target_instance: Instance, pred_labels: list[str]):
+    # находим самый ближний
+    best_idx = None
+    for idx, instance in enumerate(instances):
+        if not (instance is target_instance) and instance.label in pred_labels:
+            if best_idx is None:
+                best_idx = idx
+            else:
+                x1, y1, x2, y2 = instance.bbox
+                bx1, by1, bx2, by2 = instances[best_idx].bbox
+                tx1, ty1, tx2, ty2 = target_instance.bbox
+
+                r1 = ((x1 - tx1) ** 2 + (y1 - ty1) ** 2) ** 0.5
+                r2 = ((bx1 - tx1) ** 2 + (by1 - ty1) ** 2) ** 0.5
+                if r2 > r1:
+                    best_idx = idx
+
+    return best_idx
+
+
 def search(instances: list[Instance], search_list: list):
+
+    # Дефолтное поведение
+    if search_list is None:
+        for instance in instances:
+            if instance.label == 'number' or instance.label == 'date':
+                idx_value = closest_instance(instances, instance, ['text'])
+                if idx_value is not None:
+                    instance.match_instance = instances[idx_value]
+        return
+
+    # Шаблон найден
     for s in search_list:
         for _ in range(3):
             idx_key = get_free_instance_by_name(instances, s['key'])
@@ -145,6 +176,6 @@ def search(instances: list[Instance], search_list: list):
                     instances[idx_key].match_instance = instances[idx_value]
             if s['search'] == 'right':
                 idx_value = closest_right_instance(instances,
-                                                    target_instance=instances[idx_key], pred_labels=s['values'])
+                                                   target_instance=instances[idx_key], pred_labels=s['values'])
                 if idx_value is not None:
                     instances[idx_key].match_instance = instances[idx_value]

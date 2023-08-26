@@ -20,5 +20,5 @@ def choose_template(instances: list[Instance]):
         if instance.label == 'text' and 'studi' in instance.value:
             return 'youtube studio', STUDIO_SEARCH_LIST, studio_search_user
 
-    return None, None, None
+    return 'unknown', None, lambda i, h, w: None
 

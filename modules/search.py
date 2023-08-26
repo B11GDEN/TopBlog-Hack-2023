@@ -149,7 +149,7 @@ def search(instances: list[Instance], search_list: list):
             if instance.label == 'number' or instance.label == 'date':
                 idx_value = closest_instance(instances, instance, ['text'])
                 if idx_value is not None:
-                    instance.match_instance = instances[idx_value]
+                    instances[idx_value].match_instance = instance
         return
 
     # Шаблон найден

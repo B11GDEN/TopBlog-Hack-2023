@@ -63,6 +63,8 @@ def exel_form():
                 path = Path(Path(__file__).parents[1], 'tmp', 'archive')
                 unzip = Path(Path(__file__).parents[1], 'tmp', 'unzip')
 
+                clear_path(str(unzip))
+
                 with open(path, 'wb') as f:
                     f.write(bytes_data)
 
@@ -88,31 +90,33 @@ def exel_form():
             my_bar = st.progress(0, text=f"Обработка изображений: {n}/{file_count}")
             for file in new_unzip.glob('*'):
                 filename = file.name
-                img = cv2.imread(str(file))
+                try:
+                    img = cv2.imread(str(file))
 
-                res_img, _, matched_instances, user_instance, platform = inference(img)
+                    res_img, _, matched_instances, user_instance, platform = inference(img)
 
-                res_dict = {"filename": filename, "img": res_img}
-                if platform:
-                    res_dict["platform"] = platform
-                else:
-                    res_dict["platform"] = "unknown"
-                if user_instance:
-                    res_dict["username"] = user_instance.value
-                else:
-                    res_dict["username"] = "unknown"
+                    res_dict = {"filename": filename, "img": res_img}
+                    if platform:
+                        res_dict["platform"] = platform
+                    else:
+                        res_dict["platform"] = "unknown"
+                    if user_instance:
+                        res_dict["username"] = user_instance.value
+                    else:
+                        res_dict["username"] = "unknown"
 
-                for item in matched_instances:
-                    res_dict[item.value] = item.match_instance.value
+                    for item in matched_instances:
+                        res_dict[item.value] = item.match_instance.value
 
-                results.append(res_dict)
+                    results.append(res_dict)
+                except Exception as e:
+                    res_dict = {"filename": filename, "username": "error"}
+                    results.append(res_dict)
 
                 i += round(cost)
                 n += 1
                 my_bar.progress(i, text=f"Обработка изображений: {n}/{file_count}")
             my_bar.progress(100, text=f"Обработка изображений: Завершена!")
-
-            clear_path(str(unzip))
 
             # show_result(results)
 

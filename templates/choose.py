@@ -10,6 +10,9 @@ from templates.dzen import search_user as dzen_search_user
 from templates.studio import SEARCH_LIST as STUDIO_SEARCH_LIST
 from templates.studio import search_user as studio_search_user
 
+from templates.livedune import SEARCH_LIST as LIVEDUNE_SEARCH_LIST
+from templates.livedune import search_user as livedune_search_user
+
 
 def choose_template(instances: list[Instance]):
     for instance in instances:
@@ -19,6 +22,8 @@ def choose_template(instances: list[Instance]):
             return 'yandex dzen', DZEN_SEARCH_LIST, dzen_search_user
         if instance.label == 'text' and 'studi' in instance.value:
             return 'youtube studio', STUDIO_SEARCH_LIST, studio_search_user
+        if instance.label == 'text' and 'livedune' in instance.value:
+            return 'telegram livedune', None, livedune_search_user
 
     return 'unknown', None, lambda i, h, w: None
 

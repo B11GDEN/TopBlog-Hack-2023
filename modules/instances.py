@@ -8,7 +8,14 @@ class Instance:
         self.prob = prob
         self.bbox = [x1, y1, x2, y2]
         self.value, self.label = self.get_cls(text)
+        if self.label == 'text':
+            self.value = self.filter_text_value(self.value)
         self.match_instance = None
+        self.is_user = False
+
+    @staticmethod
+    def filter_text_value(value: str):
+        return value.lower().strip().replace('o', 'о').replace('0', 'о')
 
     @staticmethod
     def get_cls(value: str):

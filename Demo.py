@@ -46,32 +46,24 @@ def show_result(original, detection, match, matches, user_instance, platform):
 
     st.header("Results")
 
-    col1, col2 = st.columns(2)
+    st.image(match, channels="BGR")
 
-    with col1:
-        # st.image(original, channels="BGR")
-        # st.image(detection, channels="BGR")
-        st.image(match, channels="BGR")
+    st.text("Original image and the detected numbers and text.")
+    st.text("Matched instances:")
 
-    with col2:
-        with st.container():
-            st.text("Original image and the detected numbers and text.")
-            st.text("Matched instances:")
-            # st.text(f"User: {user_instance.value}")
-            col1, col2 = st.columns(2)
-            user_name = user_instance.value if user_instance is not None else 'Unknown'
-            col1.metric("User", f"{user_name}")
-            col2.metric("Platform", f"{platform}")
-            col1, col2, col3 = st.columns(3)
-            for idx, mm in enumerate(matches):
-                num = idx % 3
-                if num == 0:
-                    col1.metric(f"{mm.value}", f"{mm.match_instance.value}")
-                elif num == 1:
-                    col2.metric(f"{mm.value}", f"{mm.match_instance.value}")
-                elif num == 2:
-                    col3.metric(f"{mm.value}", f"{mm.match_instance.value}")
-                # st.text(f"Key: {mm.value} ; Value: {mm.match_instance.value}")
+    col1, col2, col3 = st.columns(3)
+    user_name = user_instance.value if user_instance is not None else 'Unknown'
+    col1.metric("User", f"{user_name}")
+    col2.metric("Platform", f"{platform}")
+    col1, col2, col3 = st.columns(3)
+    for idx, mm in enumerate(matches):
+        num = idx % 3
+        if num == 0:
+            col1.metric(f"{mm.value}", f"{mm.match_instance.value}")
+        elif num == 1:
+            col2.metric(f"{mm.value}", f"{mm.match_instance.value}")
+        elif num == 2:
+            col3.metric(f"{mm.value}", f"{mm.match_instance.value}")
 
 
 if __name__ == "__main__":

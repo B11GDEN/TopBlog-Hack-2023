@@ -1,3 +1,4 @@
+import datetime
 from pathlib import Path
 
 import cv2
@@ -95,9 +96,13 @@ def exel_form():
                 filename = file.name
                 img = cv2.imread(str(file))
 
-                res_img, _, matched_instances, user_instance, _ = inference(img)
+                res_img, _, matched_instances, user_instance, platform = inference(img)
 
-                res_dict = {"name": filename, "img": res_img}
+                res_dict = {"filename": filename, "img": res_img}
+                if platform:
+                    res_dict["platform"] = platform
+                else:
+                    res_dict["platform"] = "unknown"
                 if user_instance:
                     res_dict["username"] = user_instance.value
                 else:
@@ -120,20 +125,35 @@ def exel_form():
             download_result(results, options)
 
 
+@st.cache_data
+def convert_df(df):
+    return df.to_csv().encode('utf-8-sig')
+
+
 def download_result(results, options):
-    df = pd.DataFrame(columns=options)
+    col = ["Username", "Platform", "Filename"]
+    col = col + options
+    df = pd.DataFrame(columns=col)
 
     for result in results:
         row = []
-        for column in options:
+        for column in col:
             try:
                 row.append(result[column.lower()])
             except KeyError:
                 row.append("none")
-        # df.loc[-1] = row
         df.loc[len(df.index)] = row
 
     st.dataframe(df)
+
+    csv = convert_df(df)
+
+    st.download_button(
+        label="Download data as CSV",
+        data=csv,
+        file_name=f'{datetime.datetime.now()}.csv',
+        mime='text/csv',
+    )
 
 
 def show_result(res):

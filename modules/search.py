@@ -93,6 +93,34 @@ def closest_bottom_instance(instances: list[Instance], target_instance: Instance
     return best_idx
 
 
+def closest_right_instance(instances: list[Instance], target_instance: Instance, pred_labels: list[str]):
+    tx1, ty1, tx2, ty2 = target_instance.bbox
+
+    # фильтрация горизонтальных
+    line_instances_idx = []
+    for idx, instance in enumerate(instances):
+        x1, y1, x2, y2 = instance.bbox
+        iy1, iy2 = max(ty1, y1), min(ty2, y2)
+        i_height = max(iy2 - iy1 + 1, 0)
+        if i_height > 0:
+            line_instances_idx.append(idx)
+
+    # находим самый левый
+    best_idx = None
+    for idx in line_instances_idx:
+        if instances[idx].label in pred_labels:
+            x1, y1, x2, y2 = instances[idx].bbox
+            if x1 > tx2:
+                if best_idx is None:
+                    best_idx = idx
+                else:
+                    bx1, by1, bx2, by2 = instances[best_idx].bbox
+                    if bx1 > x1:
+                        best_idx = idx
+
+    return best_idx
+
+
 def search(instances: list[Instance], search_list: list):
     for s in search_list:
         for _ in range(3):
@@ -112,6 +140,11 @@ def search(instances: list[Instance], search_list: list):
                     instances[idx_key].match_instance = instances[idx_value]
             if s['search'] == 'bottom':
                 idx_value = closest_bottom_instance(instances,
-                                                 target_instance=instances[idx_key], pred_labels=s['values'])
+                                                    target_instance=instances[idx_key], pred_labels=s['values'])
+                if idx_value is not None:
+                    instances[idx_key].match_instance = instances[idx_value]
+            if s['search'] == 'right':
+                idx_value = closest_right_instance(instances,
+                                                    target_instance=instances[idx_key], pred_labels=s['values'])
                 if idx_value is not None:
                     instances[idx_key].match_instance = instances[idx_value]

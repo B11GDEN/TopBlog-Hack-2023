@@ -22,7 +22,7 @@ class Instance:
         # проверка на число с процентом
         if value.endswith('%'):
             try:
-                num = float(value[:-1])
+                num = float(value[:-1].replace(',', '.'))
                 return num, 'number'
             except Exception:
                 pass
@@ -30,14 +30,38 @@ class Instance:
         # проверка на число с часами
         if value.endswith('ч.'):
             try:
-                num = float(value[:-2])
+                num = float(value[:-2].replace(',', '.'))
                 return num, 'number'
+            except Exception:
+                pass
+
+        # проверка на число с тыс.
+        if value.endswith('тыс.'):
+            try:
+                num = float(value[:-4].replace(',', '.'))
+                return num*1000, 'number'
+            except Exception:
+                pass
+
+        # проверка на число с тыс.
+        if value.endswith('тыс:'):
+            try:
+                num = float(value[:-4].replace(',', '.'))
+                return num * 1000, 'number'
+            except Exception:
+                pass
+
+        # проверка на число с тыс.
+        if value.endswith('тыс'):
+            try:
+                num = float(value[:-3].replace(',', '.'))
+                return num * 1000, 'number'
             except Exception:
                 pass
 
         # проверка на число с пробелами
         try:
-            num = float(''.join(value.split(' ')))
+            num = float(''.join(value.split(' ')).replace(',', '.'))
             return num, 'number'
         except Exception:
             pass
@@ -48,7 +72,7 @@ class Instance:
 
         # проверка на обычное число
         try:
-            num = float(value)
+            num = float(value.replace(',', '.'))
             return num, 'number'
         except Exception:
             pass

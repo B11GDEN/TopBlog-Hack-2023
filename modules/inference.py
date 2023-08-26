@@ -1,3 +1,4 @@
+import streamlit as st
 import cv2
 import easyocr
 
@@ -8,10 +9,16 @@ from modules.search import search
 from templates import choose_template
 
 
+@st.cache_data
+def load_model():
+    return easyocr.Reader(['en', 'ru'], model_storage_directory=".")
+
+
 def inference(img):
     h, w, _ = img.shape
 
-    reader = easyocr.Reader(['en', 'ru'], verbose=True)
+    # reader = easyocr.Reader(['en', 'ru'], verbose=True)
+    reader = load_model()
     result = reader.readtext(img)
     instances = [Instance(r) for r in result]
 

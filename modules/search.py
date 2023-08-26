@@ -9,6 +9,13 @@ def get_free_instance_by_name(instances: list[Instance], target_text: str):
     return None
 
 
+def get_free_instance_by_name_in(instances: list[Instance], target_text: str):
+    for idx, instance in enumerate(instances):
+        if instance.label == 'text' and target_text.lower().strip() in instance.value and instance.match_instance is None:
+            return idx
+    return None
+
+
 def closest_left_instance(instances: list[Instance], target_instance: Instance, pred_labels: list[str]):
     tx1, ty1, tx2, ty2 = target_instance.bbox
 

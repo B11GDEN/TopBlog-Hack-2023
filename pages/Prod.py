@@ -10,7 +10,6 @@ import shutil
 from types import NoneType
 
 from modules.inference import inference
-from templates import TGSTAT_SEARCH_LIST
 from modules.utils import MAIN_STAT
 
 st.set_page_config(layout="wide")
@@ -117,25 +116,26 @@ def exel_form():
 
 
 def download_result(results):
-
-    options = st.multiselect('Select the parameters to be uploaded', MAIN_STAT)
-
-    if options:
-        df = pd.DataFrame(columns=options)
-        for result in results:
-            row = []
-            for column in options:
-                try:
-                    row.append(result[column])
-                except KeyError:
-                    row.append("none")
-            df.loc[-1] = row
-
-        st.dataframe(df)
-
     download_form = st.form("download_form", clear_on_submit=True)
 
     with download_form:
+        options = st.multiselect('Select the parameters to be uploaded', MAIN_STAT)
+
+        if options:
+            print('im here')
+            df = pd.DataFrame(columns=options)
+            for result in results:
+                row = []
+                for column in options:
+                    try:
+                        st.text(column)
+                        row.append(result[column])
+                    except KeyError:
+                        row.append("none")
+                df.loc[-1] = row
+
+            # st.dataframe(df)
+
         st.text("HUH")
 
 

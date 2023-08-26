@@ -28,6 +28,13 @@ def main():
         color = TYPE2COLOR[instance.label]
         bb.add(img, x1, y1, x2, y2, str(instance.value), color)
 
+    for key_instance in matched_instances:
+        k_x1, k_y1, k_x2, k_y2 = key_instance.bbox
+        v_x1, v_y1, v_x2, v_y2 = key_instance.match_instance.bbox
+        start_point = (int(k_x1 + k_x2) // 2, int(k_y1 + k_y2) // 2)
+        end_point = (int(v_x1 + v_x2) // 2, int(v_y1 + v_y2) // 2)
+        img = cv2.arrowedLine(img, start_point, end_point, (255, 0, 0), 3)
+
     x = 0
 
 

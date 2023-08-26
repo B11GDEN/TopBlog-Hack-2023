@@ -34,6 +34,7 @@ def exel_form():
         # table = st.file_uploader("Choose a table", accept_multiple_files=False, type=['xlsx'])
 
         archive = st.file_uploader("Choose a archive with images", accept_multiple_files=False, type=['zip'])
+        options = st.multiselect('Select the parameters to be uploaded', MAIN_STAT)
 
         submitted = st.form_submit_button("Submit")
 
@@ -43,6 +44,9 @@ def exel_form():
 
         if type(archive) is NoneType:
             st.error('You have to choose an archive!', icon="🚨")
+
+        if len(options) == 0:
+            st.error('You have to choose the parameters!', icon="🚨")
 
         else:
             # bytes_data = table.read()
@@ -112,31 +116,22 @@ def exel_form():
 
             # show_result(results)
 
-            download_result(results)
+            download_result(results, options)
 
 
-def download_result(results):
-    download_form = st.form("download_form", clear_on_submit=True)
+def download_result(results, options):
+    df = pd.DataFrame(columns=options)
 
-    with download_form:
-        options = st.multiselect('Select the parameters to be uploaded', MAIN_STAT)
+    for result in results:
+        row = []
+        for column in options:
+            try:
+                row.append(result[column])
+            except KeyError:
+                row.append("none")
+        df.loc[-1] = row
 
-        if options:
-            print('im here')
-            df = pd.DataFrame(columns=options)
-            for result in results:
-                row = []
-                for column in options:
-                    try:
-                        st.text(column)
-                        row.append(result[column])
-                    except KeyError:
-                        row.append("none")
-                df.loc[-1] = row
-
-            # st.dataframe(df)
-
-        st.text("HUH")
+    st.dataframe(df)
 
 
 def show_result(res):

@@ -38,7 +38,7 @@ def exel_form():
         submitted = st.form_submit_button("Запустить")
 
     if submitted:
-        if False:
+        if archive is None:
             st.error('Вам необходимо выбрать архив!', icon="🚨")
 
         if len(options) == 0:

@@ -23,7 +23,7 @@ def demo():
 
     if submitted:
 
-        if False:
+        if image is None:
             st.error('Вам необходимо выбрать изображение!', icon="🚨")
 
         else:

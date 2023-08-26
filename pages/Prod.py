@@ -1,4 +1,7 @@
 import streamlit as st
+import pandas as pd
+
+from types import NoneType
 
 
 st.set_page_config(layout="wide")
@@ -16,3 +19,10 @@ def exel_form():
             ('Auto', 'Telegram', 'VK', 'Yandex Dzen', 'YouTube'))
 
         submitted = st.form_submit_button("Submit")
+
+    if submitted:
+        if type(table) is NoneType:
+            st.error('You have to choose an image!', icon="🚨")
+
+        else:
+            ...

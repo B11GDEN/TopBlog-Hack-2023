@@ -9,7 +9,7 @@ import pandas as pd
 
 from types import NoneType
 
-from modules.inference import main
+from modules.inference import inference
 
 
 st.set_page_config(layout="wide")
@@ -39,7 +39,7 @@ def demo():
 
             with st.spinner('Wait for it...'):
                 start = time.time()
-                res = main(opencv_image)
+                res = inference(opencv_image)
                 end = time.time() - start
 
             # res_show = cv2.resize(res, (0,0), fx=0.5, fy=0.5)
@@ -63,7 +63,5 @@ def show_result(original, detection, match, time):
         st.text(f"Elapsed time: {time}")
 
 
-
 if __name__ == "__main__":
     demo()
-

@@ -5,7 +5,7 @@ from bounding_box import bounding_box as bb
 from modules.utils import TYPE2COLOR
 from modules.instances import Instance
 from modules.search import search
-from templates import TGSTAT_SEARCH_LIST, tgstat_search_user
+from templates import choose_template
 
 
 def main():
@@ -21,9 +21,12 @@ def main():
     reader = easyocr.Reader(['en', 'ru'], verbose=True)
     result = reader.readtext(img)
     instances = [Instance(r) for r in result]
-    search(instances, TGSTAT_SEARCH_LIST)
+
+    search_list, search_user = choose_template(instances)
+
+    search(instances, search_list)
     matched_instances = [ins for ins in instances if ins.match_instance is not None]
-    user_instance = tgstat_search_user(instances, h, w)
+    user_instance = search_user(instances, h, w)
 
     for instance in instances:
         if not instance.is_user:

@@ -22,7 +22,7 @@ def main():
     result = reader.readtext(img)
     instances = [Instance(r) for r in result]
 
-    search_list, search_user = choose_template(instances)
+    platform, search_list, search_user = choose_template(instances)
 
     search(instances, search_list)
     matched_instances = [ins for ins in instances if ins.match_instance is not None]

@@ -9,7 +9,7 @@ from modules.search import search
 from templates import choose_template
 
 
-@st.cache
+@st.cache_data
 def load_model():
     return easyocr.Reader(['en', 'ru'], model_storage_directory=".")
 

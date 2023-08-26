@@ -8,8 +8,6 @@ import pandas as pd
 import os
 import shutil
 
-from types import NoneType
-
 from modules.inference import inference
 from modules.utils import MAIN_STAT
 
@@ -40,11 +38,7 @@ def exel_form():
         submitted = st.form_submit_button("Запустить")
 
     if submitted:
-        # if type(table) is NoneType:
-        #     st.error('You have to choose an table!', icon="🚨")
-
-        if type(archive) is NoneType:
-        # if False:
+        if False:
             st.error('Вам необходимо выбрать архив!', icon="🚨")
 
         if len(options) == 0:

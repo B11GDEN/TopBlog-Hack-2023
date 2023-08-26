@@ -7,8 +7,6 @@ import os
 import numpy as np
 import pandas as pd
 
-from types import NoneType
-
 from modules.inference import inference
 
 
@@ -24,8 +22,8 @@ def demo():
         submitted = st.form_submit_button("Запустить")
 
     if submitted:
-        if type(image) is NoneType:
-        # if False:
+
+        if False:
             st.error('Вам необходимо выбрать изображение!', icon="🚨")
 
         else:

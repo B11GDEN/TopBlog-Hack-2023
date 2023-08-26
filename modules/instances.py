@@ -27,6 +27,21 @@ class Instance:
             except Exception:
                 pass
 
+        # проверка на число с часами
+        if value.endswith('ч.'):
+            try:
+                num = float(value[:-2])
+                return num, 'number'
+            except Exception:
+                pass
+
+        # проверка на число с пробелами
+        try:
+            num = float(''.join(value.split(' ')))
+            return num, 'number'
+        except Exception:
+            pass
+
         # если это предложение
         if len(value.split(' ')) > 1:
             return value, 'text'

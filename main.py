@@ -12,8 +12,8 @@ def main():
     src = Path("C:/Datasets/SMM Hack")
 
     # im = src / 'tg' / 'images' / '0b751210-de3e-412a-b96f-5a8494daa6bf.PNG'
-    im = src / 'tg' / 'images' / '1dcc636c-3537-45e2-b1d7-6d81142aeb32.png'
-    # im = src / 'yt' / 'yt1' / '5caff51d-e3e6-4aca-9aea-9bfeff8c4d83.jpg'
+    # im = src / 'tg' / 'images' / '1dcc636c-3537-45e2-b1d7-6d81142aeb32.png'
+    im = src / 'zn' / 'images' / '6a930d50-ea2c-4ddd-ba1c-0378474eb215.png'
 
     img = cv2.imread(str(im))
     h, w, _ = img.shape
@@ -41,9 +41,10 @@ def main():
         end_point = (int(v_x1 + v_x2) // 2, int(v_y2))
         img = cv2.arrowedLine(img, start_point, end_point, (255, 0, 0), 3)
 
-    x1, y1, x2, y2 = user_instance.bbox
-    color = 'orange'
-    bb.add(img, x1, y1, x2, y2, str(user_instance.value), color)
+    if user_instance is not None:
+        x1, y1, x2, y2 = user_instance.bbox
+        color = 'orange'
+        bb.add(img, x1, y1, x2, y2, str(user_instance.value), color)
 
     x = 0
 

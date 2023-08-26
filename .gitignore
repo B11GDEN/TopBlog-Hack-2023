@@ -162,4 +162,3 @@ cython_debug/
 # Development files
 /dataset/
 /images/
-/tmp/

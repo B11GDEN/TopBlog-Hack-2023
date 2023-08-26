@@ -19,6 +19,8 @@ def choose_template(instances: list[Instance]):
             return 'yandex dzen', DZEN_SEARCH_LIST, dzen_search_user
         if instance.label == 'text' and 'studi' in instance.value:
             return 'youtube studio', STUDIO_SEARCH_LIST, studio_search_user
+        if instance.label == 'text' and 'вконтакте' in instance.value:
+            return 'вконтакте', None, lambda i, h, w: None
 
     return 'unknown', None, lambda i, h, w: None
 

@@ -20,10 +20,10 @@ def choose_template(instances: list[Instance]):
             return 'telegram tgstat', TGSTATS_SEARCH_LIST, tgstats_search_user
         if instance.label == 'text' and ('dzen' in instance.value or 'дзен' in instance.value):
             return 'yandex dzen', DZEN_SEARCH_LIST, dzen_search_user
-        if instance.label == 'text' and 'studi' in instance.value:
+        if instance.label == 'text' and 'studiо' == instance.value:
             return 'youtube studio', STUDIO_SEARCH_LIST, studio_search_user
         if instance.label == 'text' and 'livedune' in instance.value:
-            return 'telegram livedune', None, livedune_search_user
+            return 'livedune', None, livedune_search_user
         if instance.label == 'text' and 'вконтакте' in instance.value:
             return 'вконтакте', None, lambda i, h, w: None
 

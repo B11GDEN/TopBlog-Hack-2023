@@ -23,7 +23,7 @@ def choose_template(instances: list[Instance]):
         if instance.label == 'text' and 'studiо' == instance.value:
             return 'youtube studio', STUDIO_SEARCH_LIST, studio_search_user
         if instance.label == 'text' and 'livedune' in instance.value:
-            return 'telegram livedune', None, livedune_search_user
+            return 'livedune', None, livedune_search_user
         if instance.label == 'text' and 'вконтакте' in instance.value:
             return 'вконтакте', None, lambda i, h, w: None
 

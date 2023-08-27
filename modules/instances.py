@@ -16,10 +16,14 @@ class Instance:
             self.value, num = self.value.split(' ')
             self.value1 = self.value
             self.match_instance = Instance((bbox, num, prob))
+            self.value = self.value.lower().strip().replace('o', 'о').replace('0', 'о')
+            self.value1 = self.value1.lower().strip().replace('o', 'о').replace('0', 'о')
         elif self.label == 'num_text':
             num, self.value = self.value.split(' ')
             self.value1 = self.value
             self.match_instance = Instance((bbox, num, prob))
+            self.value = self.value.lower().strip().replace('o', 'о').replace('0', 'о')
+            self.value1 = self.value1.lower().strip().replace('o', 'о').replace('0', 'о')
 
         self.is_user = False
 

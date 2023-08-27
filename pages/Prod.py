@@ -115,6 +115,8 @@ def exel_form():
 
                 i += round(cost)
                 n += 1
+                if i > 100:
+                    i = 100
                 my_bar.progress(i, text=f"Обработка изображений: {n}/{file_count}")
             my_bar.progress(100, text=f"Обработка изображений: Завершена!")
 
